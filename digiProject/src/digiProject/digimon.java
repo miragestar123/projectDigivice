@@ -1,5 +1,5 @@
 package digiProject;
-
+//Class for handling digimon specific variables.
 public class digimon extends mainDigivice {
 	String species = "Dorumon";
 	String level = "Rookie";
