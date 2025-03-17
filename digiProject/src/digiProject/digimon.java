@@ -13,6 +13,21 @@ public class digimon extends mainDigivice {
 	int atkPwr = 150;
 	int HP = 200;
 	
+	public digimon(String species, String level, String attribute, double hunger, double victory, boolean needPoop,
+	            boolean isInjure, boolean isSick, int reincCounter, int atkPwr, int HP) {
+	        this.species = species;
+	        this.level = level;
+	        this.attribute = attribute;
+	        this.hunger = hunger;
+	        this.victory = victory;
+	        this.needPoop = needPoop;
+	        this.isInjure = isInjure;
+	        this.isSick = isSick;
+	        this.reincCounter = reincCounter;
+	        this.atkPwr = atkPwr;
+	        this.HP = HP;
+	}
+	  
 	public String getSpecies() {
 		return species;
 	}
