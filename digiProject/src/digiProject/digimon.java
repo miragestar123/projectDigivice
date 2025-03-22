@@ -110,4 +110,5 @@ public class digimon extends mainDigivice {
 	}
 	*/
 	}
+}
 
