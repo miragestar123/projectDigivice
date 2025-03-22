@@ -1,17 +1,18 @@
 package digiProject;
 //Class for handling digimon specific variables.
 public class digimon extends mainDigivice {
-	String species = "Dorumon";
-	String level = "Rookie";
-	String attribute = "Beast";
-	double hunger = 100;
-	double victory = 0;
-	boolean needPoop = false;
-	boolean isInjure = false;
-	boolean isSick = false;
-	int reincCounter = 0;
-	int atkPwr = 150;
-	int HP = 200;
+	String species;
+	String level;
+	String attribute;
+	int index;
+	double hunger;
+	double victory;
+	boolean needPoop;
+	boolean isInjure;
+	boolean isSick;
+	int reincCounter;
+	int atkPwr;
+	int HP;
 	
 	public digimon(String species, String level, String attribute, double hunger, double victory, boolean needPoop,
 	            boolean isInjure, boolean isSick, int reincCounter, int atkPwr, int HP) {
@@ -94,6 +95,15 @@ public class digimon extends mainDigivice {
 	public void setHP(int hP) {
 		HP = hP;
 	}
+	
+	  @Override
+	    public String toString() {
+	        return "Digimon{" +
+	                "index=" + index +
+	                ", name='" + species + '\'' +
+	                ", attack=" + atkPwr +
+	                ", HP=" + HP +
+	                ",'}";
 	/*
 	public static void main(String[] args) {
 		
