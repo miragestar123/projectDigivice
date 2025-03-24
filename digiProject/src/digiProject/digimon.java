@@ -1,10 +1,10 @@
 package digiProject;
 //Class for handling digimon specific variables.
 public class digimon extends mainDigivice {
+	int index;
 	String species;
 	String level;
 	String attribute;
-	int index;
 	double hunger;
 	double victory;
 	boolean needPoop;
@@ -14,8 +14,9 @@ public class digimon extends mainDigivice {
 	int atkPwr;
 	int HP;
 	
-	public digimon(String species, String level, String attribute, double hunger, double victory, boolean needPoop,
+	public digimon(int index, String species, String level, String attribute, double hunger, double victory, boolean needPoop,
 	            boolean isInjure, boolean isSick, int reincCounter, int atkPwr, int HP) {
+			this.index = index;
 	        this.species = species;
 	        this.level = level;
 	        this.attribute = attribute;
@@ -29,6 +30,14 @@ public class digimon extends mainDigivice {
 	        this.HP = HP;
 	}
 	  
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public String getSpecies() {
 		return species;
 	}
@@ -96,14 +105,21 @@ public class digimon extends mainDigivice {
 		HP = hP;
 	}
 	
-	  @Override
+	 @Override
 	    public String toString() {
-	        return "Digimon{" +
-	                "index=" + index +
-	                ", name='" + species + '\'' +
-	                ", attack=" + atkPwr +
+	        return "digimon{" + "index='" + index + '\'' +
+	                ", species='" + species + '\'' +
+	                ", level='" + level + '\'' +
+	                ", attribute='" + attribute + '\'' +
+	                ", hunger=" + hunger +
+	                ", victory=" + victory +
+	                ", needPoop=" + needPoop +
+	                ", isInjure=" + isInjure +
+	                ", isSick=" + isSick +
+	                ", reincCounter=" + reincCounter +
+	                ", atkPwr=" + atkPwr +
 	                ", HP=" + HP +
-	                ",'}";
+	                '}';
 	/*
 	public static void main(String[] args) {
 		

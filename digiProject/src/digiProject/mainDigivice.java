@@ -16,7 +16,7 @@ public class mainDigivice {
 		System.out.println("Last, the minutes.");
 		int minutes = inputCheck.nextInt();
 		System.out.println("So it's looking like today's date is " + month + "." + day + " and " + hour + ":" + minutes + " is the time.");
-		digimon firstGuy = new digimon(null, null, null, minutes, minutes, false, false, false, minutes, minutes, minutes);
+		digimon firstGuy = new digimon(minutes, null, null, null, minutes, minutes, false, false, false, minutes, minutes, minutes);
 		String goforth = "Yes";
 		System.out.println("Initializing...");
 		System.out.println(firstGuy.getSpecies() + " is the species of the first digimon we're using here.");
