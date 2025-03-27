@@ -6,15 +6,13 @@ package digiProject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Minigame extends mainDigivice{
 	
 	//filename argument points to a text file in the /res directory
-	private java.util.List<Integer> getAttackMeter(String filename) {
+	private java.util.List<Integer> getAttackMeter(Path filePath) {
 		try {
-			Path filePath = Paths.get("src", "digiProject", "res", filename).toAbsolutePath();
-        	java.util.List<String> lines = Files.readAllLines(filePath);
+			java.util.List<String> lines = Files.readAllLines(filePath);
             java.util.List<Integer> attackMeter = new java.util.LinkedList<>();
             for (String line : lines) {
                 attackMeter.add(Integer.parseInt(line.trim()));
@@ -31,37 +29,45 @@ public class Minigame extends mainDigivice{
 	
 	public static void main(String[] args) {
 		Minigame minigame = new Minigame();
-		String fileName = "AM.txt";
-		java.util.List<Integer> attackMeter = minigame.getAttackMeter(fileName);
+		FilePathGen f = new FilePathGen();
+		Path filePath = f.getFilePath("AM.txt");
+		java.util.List<Integer> attackMeter = minigame.getAttackMeter(filePath);
 		if (attackMeter.size() == 0) {
 			return;
-		}
-		else {
-			System.out.println(attackMeter.size());
 		}
 		java.util.ListIterator<Integer> iterator = attackMeter.listIterator();
 		
 		
 		//Rest of code currently used for testing 
+		System.out.println(attackMeter.size());
 		System.out.println(attackMeter);
 		for (int i=0; i < attackMeter.size(); i++) {
 			System.out.print(iterator.next());
 		}
 		System.out.println();
+		//Resets iterator to first position
 		iterator = attackMeter.listIterator();
+		//Loop structure for iterating through the attack meter from beginning to end and back to beginning in sequence
 		int i = 0;
-		while (iterator.hasNext() || iterator.hasPrevious()) {
-			if (i==60) {
-				return;
+		boolean goFoward = true;
+		while (i<60) {
+			while (goFoward == true) {
+				if (iterator.hasNext()) {
+					System.out.print(iterator.next());
+					++i;
+				}
+				else {
+					goFoward = !goFoward;
+				}
 			}
-			++i;
-			if (iterator.hasNext()) {
-				System.out.print(iterator.next());
-				continue;
-			}
-			if (iterator.hasPrevious()) {
-				System.out.print(iterator.previous());
-				continue;
+			while (goFoward == false) {
+				if (iterator.hasPrevious()) {
+					System.out.print(iterator.previous());
+					++i;
+				}
+				else {
+					goFoward = !goFoward;
+				}
 			}
 		}
 	}
