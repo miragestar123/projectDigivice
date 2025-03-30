@@ -1,14 +1,16 @@
 package digiProject;
 import java.util.*;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Date;
 
 public class mainDigivice {
 
     public static void main(String[] args) {
         Scanner inputCheck = new Scanner(System.in);
 
+        // Load the digimon list from the file
+        FilePathGen findFilePath = new FilePathGen();
+        String filePath = findFilePath.getFilePath("digimonList.txt").toString();
+        List<digimon> digiList = digimonReader.getDigiList(filePath);  // Initialize the list
+        
         // User input for date and time, now including the year
         System.out.println("Set the date: \nWhat month is it? 1 - 12.");
         int month = inputCheck.nextInt();
@@ -30,18 +32,31 @@ public class mainDigivice {
         
         // Initialize Digimon with current time (or other initialization logic)
         digimon firstGuy = new digimon(minutes, null, null, null, minutes, minutes, false, false, false, minutes, minutes, minutes);
-        
+        digimon selectedDigimon = null;  // Declare outside of the if block
+
         // Interaction with the Digimon
         String goforth = "Yes";
         System.out.println("Initializing...");
-        System.out.println(firstGuy.getSpecies() + " is the species of the first digimon we're using here.");
-        System.out.println("Dorumon's attack power is " + firstGuy.atkPwr + ". \nWould you like to train it further? Type Yes to train.");
+        System.out.println("What Digimon would you like to boot up this session? \nPlease provide Index #.");
+        int indexFinder = inputCheck.nextInt();
+        // Check if the index is valid
+        if (indexFinder >= 0 && indexFinder < digiList.size()) {
+            selectedDigimon = digiList.get(indexFinder);
+            System.out.println("You selected: " + selectedDigimon.getSpecies() + " with attack power " + selectedDigimon.getAtkPwr());
+            } else {
+            System.out.println("Invalid index. Please select a valid Digimon index.");
+        }
+    
+
+        //digimon testGuy = new digimon();
+        System.out.println(selectedDigimon.getSpecies() + " is the species of the first digimon we're using here.");
+        System.out.println(selectedDigimon.getSpecies() + "'s attack power is " + selectedDigimon.atkPwr + ". \nWould you like to train it further? Type Yes to train.");
         String userInput = inputCheck.next();
         
         // User decides whether to train Digimon
         if (userInput.equals(goforth)) {
-            firstGuy.atkPwr += 100;
-            System.out.println("Attack power is now " + firstGuy.atkPwr);
+            selectedDigimon.atkPwr += 100;
+            System.out.println("Attack power is now " + selectedDigimon.atkPwr);
         } else {
             System.out.println("Why bother asking then?");
         }
@@ -97,8 +112,8 @@ class Clock {
     }
 
     // Display the current date and time including the year
-    private void displayTime() {
+   /* private void displayTime() {
         System.out.println("Current Date: " + month + "/" + day + "/" + year);
         System.out.println("Current Time: " + String.format("%02d", hour) + ":" + String.format("%02d", minute));
-    }
+    } */
 }
