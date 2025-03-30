@@ -1,5 +1,5 @@
 package digiProject;
 
-public class evolution {
+public class evolution extends mainDigivice {
 
 }

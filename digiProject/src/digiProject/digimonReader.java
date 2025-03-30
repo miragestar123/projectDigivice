@@ -6,9 +6,10 @@ package digiProject;
 
 public class digimonReader {
 	    public static void main(String[] args) {
+	    	FilePathGen findFilePath = new FilePathGen();
 	    	
 	    	//Creates String reflecting actual file path to be referenced later
-	        String filePath = "digimonList.txt";  // Adjust this path to actual file path
+	        String filePath = findFilePath.getFilePath("digimonList.txt").toString();  
 	        //Initializes new list of digimon Class objects based on parameters from readDigimonFile Class
 	        List<digimon> digiList = readDigimonFile(filePath);
 	        

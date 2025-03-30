@@ -60,7 +60,7 @@ public class digimon extends mainDigivice {
 		return hunger;
 	}
 	public void setHunger(double hunger) {
-		this.hunger = hunger;
+		this.hunger = hunger; 
 	}
 	public double getVictory() {
 		return victory;
