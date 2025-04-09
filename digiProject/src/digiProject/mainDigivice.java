@@ -84,7 +84,7 @@ class Clock {
             public void run() {
                 // Increment the time by one minute for simplicity (you can adjust this for seconds if you want more precise time simulation)
                 updateClock();
-                //displayTime();
+                // displayTime();
             }
         }, 0, 60000); // Update every minute
     }
