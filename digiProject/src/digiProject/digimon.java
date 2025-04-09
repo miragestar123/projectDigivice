@@ -10,12 +10,13 @@ public class digimon extends mainDigivice {
 	boolean needPoop;
 	boolean isInjure;
 	boolean isSick;
+	int spirit;
 	int reincCounter;
 	int atkPwr;
 	int HP;
 	
 	public digimon(int index, String species, String level, String attribute, double hunger, double victory, boolean needPoop,
-	            boolean isInjure, boolean isSick, int reincCounter, int atkPwr, int HP) {
+	            boolean isInjure, boolean isSick, int reincCounter, int atkPwr, int HP, int spirit) {
 			this.index = index;
 	        this.species = species;
 	        this.level = level;
@@ -28,8 +29,17 @@ public class digimon extends mainDigivice {
 	        this.reincCounter = reincCounter;
 	        this.atkPwr = atkPwr;
 	        this.HP = HP;
+	        this.spirit = spirit;
 	}
 	  
+	public int getSpirit() {
+		return spirit;
+	}
+
+	public void setSpirit(int spirit) {
+		this.spirit = spirit;
+	}
+
 	public int getIndex() {
 		return index;
 	}

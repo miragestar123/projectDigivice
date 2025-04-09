@@ -40,9 +40,10 @@ public class digimonReader {
                 int reincCounter = Integer.parseInt(parts[9]);
                 int atkPwr = Integer.parseInt(parts[10]);
                 int HP = Integer.parseInt(parts[11]);
+                int spirit = Integer.parseInt(parts[12]);
                 
                 // Create a digimon object with the extracted data
-                digimon d = new digimon(index, species, level, attribute, hunger, victory, needPoop, isInjure, isSick, reincCounter, atkPwr, HP);
+                digimon d = new digimon(index, species, level, attribute, hunger, victory, needPoop, isInjure, isSick, reincCounter, atkPwr, HP, spirit);
                 
                 // Add the digimon to the list
                 digiList.add(d);
