@@ -103,14 +103,15 @@ public class Minigame extends mainDigivice{
 		catch (InterruptedException e) {}
 	}
 	
-	public static void main(String[] args) {
+	//Method for actually running attack meter minigame
+	public int SliderMinigame(String fileName) {
 		//Attack Meter Generation
 		Minigame minigame = new Minigame();
 		FilePathGen f = new FilePathGen();
-		Path filePath = f.getFilePath("AM.txt");
+		Path filePath = f.getFilePath(fileName);
 		java.util.List<Integer> attackMeter = minigame.getAttackMeter(filePath);
 		if (attackMeter.size() == 0) {
-			return;
+			return 0;
 		}
 		
 		//Callback receivers
@@ -158,6 +159,16 @@ public class Minigame extends mainDigivice{
 		System.out.println(runMinigame.iterator.nextIndex());
 		System.out.println(result);
 		System.out.println(inputCheck.inputDetected);
+		return result;
 	}
+	
+	//Main for testing purposes only, uncomment to test class
+	/*
+	public static void main(String[] args) {
+		Minigame minigame = new Minigame();
+		int output = minigame.SliderMinigame("AM.txt");
+		System.out.println("===============================================");
+		System.out.println(output);
+	}*/
 
 }
