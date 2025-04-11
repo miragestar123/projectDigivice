@@ -4,6 +4,7 @@
 */
 package digiProject;
 import java.io.IOException;
+import java.lang.reflect.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -28,28 +29,63 @@ public class Minigame extends mainDigivice{
 	}
 	
 	//Callback interface for the attack meter
-	public interface outputCallback {
-		Integer onTaskEnd(int i);
+	@FunctionalInterface
+	public interface OutputCallback {
+		int onTaskEnd(int i);
+	}
+	
+	//Holder class for callbacks
+	private class Holder{
+		public int value;
+		
+		public Holder(int value) {
+			this.value = value;
+		}
+	}
+	
+	//TimerTask manager
+	private class ThreadManager implements OutputCallback{
+		@SuppressWarnings("unused")
+		private int output;
+		private java.util.Timer timer;
+		
+		//Constructor passes class to run as an argument
+		private ThreadManager(java.util.TimerTask task, long delay) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+			this.timer = new java.util.Timer(this.toString(), false);
+			timer.scheduleAtFixedRate(task, 0, delay);
+		}
+		
+		//Cancels timer thread
+		private void stop() {
+			timer.cancel();
+		}
+		
+		public int onTaskEnd(int i) {
+			return this.output = i;
+		}
+		
 	}
 	
 	//Task loop for minigame timer
 	private class RunAttackMeter extends java.util.TimerTask {
-		java.util.ListIterator<Integer> iterator;
+		private OutputCallback callback;
+		private java.util.ListIterator<Integer> iterator;
 		private boolean goFoward = true;
+		private int output;
 		
 		//Constructor for callback sender
-		private outputCallback callback;
-		private RunAttackMeter(List<Integer> attackMeter, outputCallback callback) {
+		private RunAttackMeter(List<Integer> attackMeter, OutputCallback callback) {
 			this.iterator = attackMeter.listIterator();
 			this.callback = callback;
+			this.output = 0;
 		}
 		
 		
 		public void run() {
-			//System.out.println(iterator.nextIndex());
 			if (goFoward == true) {
 				if (iterator.hasNext()) {
-					iterator.next();
+					output = iterator.next();
+					callback.onTaskEnd(output);
 				}
 				else {
 					goFoward = !goFoward;
@@ -57,15 +93,14 @@ public class Minigame extends mainDigivice{
 			}
 			if (goFoward == false) {
 				if (iterator.hasPrevious()) {
-					iterator.previous();
+					output = iterator.previous();
+					callback.onTaskEnd(output);
 				}
 				else {
 					goFoward = !goFoward;
 				}
 			}
-			if (callback != null) {
-				callback.onTaskEnd(iterator.nextIndex());
-			}
+			//System.out.println(iterator.nextIndex());
 		}
 	}
 	
@@ -73,24 +108,24 @@ public class Minigame extends mainDigivice{
 	private class InputCheck extends java.util.TimerTask {
 		java.util.Scanner scan = new java.util.Scanner(System.in);
 		String input;
-		boolean inputDetected;
+		int inputDetected;
 		
 		//Task and callback sender constructor
-		outputCallback callback;
-		private InputCheck(outputCallback callback) {
+		OutputCallback callback;
+		private InputCheck(OutputCallback callback) {
 			this.input = "";
-			this.inputDetected = false;
+			this.inputDetected = 0;
 			this.callback = callback;
 		}
 		
 		public void run() {
 			input = scan.next();
 			if (input.length() != 0) {
-				inputDetected = true;
-				callback.onTaskEnd(1);
+				inputDetected = 1;
+				callback.onTaskEnd(inputDetected);
 			}
 			else {
-				callback.onTaskEnd(0);
+				callback.onTaskEnd(inputDetected);
 			}
 		}
 	}
@@ -103,10 +138,26 @@ public class Minigame extends mainDigivice{
 		catch (InterruptedException e) {}
 	}
 	
-	//Method for actually running attack meter minigame
-	public int SliderMinigame(String fileName) {
+	//Method for actually running attack meter minigame.
+	//Parameters:
+	//	Minigame minigame:		Requires an instance of the .class file
+	//	int value:				Controls the speed of the slider. Has a range of [1-7]
+	//Returns:
+	//	0						Method failed to load background tasks
+	//	1-4						Attack meter result
+	public int sliderMinigame(Minigame minigame, int index, int value) {
+		value = Math.max(1, Math.min(value, 7));
+		String fileName;
+		long start;
+		long timeOut = 3000000000L;
+		long speed = ((3 * (value - 1)) + 10);
+		Holder resultHolder = new Holder(0);
+		Holder endHolder = new Holder(0);
+		ThreadManager runInput;
+		ThreadManager runMinigame;
+		
 		//Attack Meter Generation
-		Minigame minigame = new Minigame();
+		fileName = "AM.txt";
 		FilePathGen f = new FilePathGen();
 		Path filePath = f.getFilePath(fileName);
 		java.util.List<Integer> attackMeter = minigame.getAttackMeter(filePath);
@@ -114,26 +165,11 @@ public class Minigame extends mainDigivice{
 			return 0;
 		}
 		
-		//Callback receivers
-		outputCallback output = new outputCallback() {
-			@Override
-			public Integer onTaskEnd(int i) {
-				return i;
-			}
-		};	
-		outputCallback user = new outputCallback() {
-			@Override
-			public Integer onTaskEnd(int i) {
-				return i;
-			}
-		};
-		
-		
 		//Preparing the minigame
-		java.util.Timer timer1 = new java.util.Timer("minigame", false);
-		java.util.Timer timer2 = new java.util.Timer("userInput", true);
-		RunAttackMeter runMinigame = minigame.new RunAttackMeter(attackMeter, output);
-		InputCheck inputCheck = minigame.new InputCheck(user);
+		OutputCallback resultCallback = result -> resultHolder.value = result;
+		OutputCallback userCallback = result -> endHolder.value = result;
+		RunAttackMeter runAttackMeter = minigame.new RunAttackMeter(attackMeter, resultCallback);
+		InputCheck inputCheck = minigame.new InputCheck(userCallback);
 		
 		//Running the minigame
 		System.out.println("Rules...");
@@ -146,27 +182,46 @@ public class Minigame extends mainDigivice{
 		pause(1000L);
 		System.out.println("1.!!");
 		pause(1000L);
-		timer2.schedule(inputCheck, 0, 3);
-		System.out.println("GO!!!");
-		timer1.scheduleAtFixedRate(runMinigame, 0, 3);
-		long start = System.nanoTime();
-		while ((System.nanoTime() - start) < 3000000000L && !inputCheck.inputDetected) {
-			
+		try {	//Starts background key listener
+			runInput = minigame.new ThreadManager(inputCheck, (timeOut - 1L));
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			return 0;
 		}
-		timer1.cancel();
-		int result = attackMeter.get(runMinigame.iterator.nextIndex());
+		
+		System.out.println("GO!!! \n");
+		
+		try {	//Starts background attack meter minigame
+			runMinigame = minigame.new ThreadManager(runAttackMeter, speed);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		start = System.nanoTime();
+		while ((System.nanoTime() - start) < 3000000000L && endHolder.value == 0) {
+			pause(1L);
+		}
+		runInput.stop();
+		runMinigame.stop();
+		
 		System.out.println("===============================================");
-		System.out.println(runMinigame.iterator.nextIndex());
-		System.out.println(result);
-		System.out.println(inputCheck.inputDetected);
-		return result;
+		System.out.println(runAttackMeter.iterator.nextIndex());
+		System.out.println(resultHolder.value);
+		System.out.println(endHolder.value + "\n");
+		
+		return resultHolder.value;
 	}
+	
 	
 	//Main for testing purposes only, uncomment to test class
 	/*
 	public static void main(String[] args) {
 		Minigame minigame = new Minigame();
-		int output = minigame.SliderMinigame("AM.txt");
+		int output = minigame.sliderMinigame(minigame, 0, 3);
+		minigame = null;
 		System.out.println("===============================================");
 		System.out.println(output);
 	}*/
