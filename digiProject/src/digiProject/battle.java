@@ -2,46 +2,51 @@ package digiProject;
 import java.util.Random;
 
 public class battle extends mainDigivice {
-	public digimon myBattler = null;
-	public digimon theOpp = null;
 	public static void main(String[] args) {
-		battle newBattle = new battle(mainDigivice.battlerDigimon);
-		digimon myguy = mainDigivice.battlerDigimon;
+		digimon testDigimon = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 1, 1);
+		battle battle = new battle();
+		BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
 		//myBattler = initializeDigimon;
-		startBattle();
+		battle.startBattle(newBattle.myBattler, newBattle.theOpp);
 	}
 	
-	public battle(digimon selectedDigimon) {
-        // Initialize myBattler with selectedDigimon's values
-        this.myBattler = new digimon(
-               selectedDigimon.getIndex(),
-               selectedDigimon.getSpecies(),
-               selectedDigimon.getLevel(),
-               selectedDigimon.getAttribute(),
-               selectedDigimon.getHunger(),
-               selectedDigimon.getVictory(),
-               selectedDigimon.isNeedPoop(),
-               selectedDigimon.isInjure(),
-               selectedDigimon.isSick(),
-               selectedDigimon.getReincCounter(),	
-               selectedDigimon.getAtkPwr(),
-               selectedDigimon.getHP(),
-               selectedDigimon.getSpirit()
-            );
-        
-        // Initialize the opponent Digimon with random values or a different Digimon
-        // This can be modified as needed
-        this.theOpp = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 1, 1);
-    }
+	//Battle instance class (Author: Xandino)
+	private class BattleInstance{
+		public digimon myBattler = null;
+		public digimon theOpp = null;
+		
+		public BattleInstance(digimon selectedDigimon) {
+	        // Initialize myBattler with selectedDigimon's values
+	        this.myBattler = new digimon(
+	               selectedDigimon.getIndex(),
+	               selectedDigimon.getSpecies(),
+	               selectedDigimon.getLevel(),
+	               selectedDigimon.getAttribute(),
+	               selectedDigimon.getHunger(),
+	               selectedDigimon.getVictory(),
+	               selectedDigimon.isNeedPoop(),
+	               selectedDigimon.isInjure(),
+	               selectedDigimon.isSick(),
+	               selectedDigimon.getReincCounter(),	
+	               selectedDigimon.getAtkPwr(),
+	               selectedDigimon.getHP(),
+	               selectedDigimon.getSpirit()
+	            );
+	        
+	        // Initialize the opponent Digimon with random values or a different Digimon
+	        // This can be modified as needed
+	        this.theOpp = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 1, 1);
+	    }
+	}
 
-    public void startBattle() {
+    public void startBattle(digimon myBattler, digimon theOpp) {
         int myHitPoints = myBattler.HP;
         int oppHitPoints = theOpp.HP;
         int turnCount = 0;
         double myHitrate = ((myBattler.atkPwr * 100)/(myBattler.atkPwr + theOpp.atkPwr)); //+ attributeAdvantage
         double oppHitrate = ((theOpp.atkPwr * 100)/(theOpp.atkPwr + myBattler.atkPwr));
-        System.out.println("Ready??? /nFight!!!");
+        System.out.println("Ready???" + "/n" + "Fight!!!");
 
         while (myHitPoints > 0 && oppHitPoints > 0) {
             turnCount++;

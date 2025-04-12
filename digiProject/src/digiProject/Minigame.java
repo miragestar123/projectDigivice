@@ -225,7 +225,7 @@ public class Minigame extends mainDigivice{
 	
 	
 	//Main for testing purposes only, uncomment to test class
-	
+	/*
 	public static void main(String[] args) {
 		Minigame minigame = new Minigame();
 		System.out.println("Starting Xai!...");
@@ -238,6 +238,6 @@ public class Minigame extends mainDigivice{
 		minigame = null;
 		System.out.println("===============================================");
 		System.out.println(output);
-	}
+	}*/
 
 }
