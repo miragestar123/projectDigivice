@@ -138,6 +138,14 @@ public class Minigame extends mainDigivice{
 		catch (InterruptedException e) {}
 	}
 	
+	//Method for Xai dice. Returns integer 1-7
+	public int xaiMinigame() {
+		int result = 0;
+		java.util.Random xai = new java.util.Random();
+		result = xai.nextInt(7) + 1;
+		return result;
+	}
+	
 	//Method for actually running attack meter minigame.
 	//Parameters:
 	//	Minigame minigame:		Requires an instance of the .class file
@@ -183,7 +191,7 @@ public class Minigame extends mainDigivice{
 		System.out.println("1.!!");
 		pause(1000L);
 		try {	//Starts background key listener
-			runInput = minigame.new ThreadManager(inputCheck, (timeOut - 1L));
+			runInput = minigame.new ThreadManager(inputCheck, (timeOut + 1L));
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
@@ -217,13 +225,19 @@ public class Minigame extends mainDigivice{
 	
 	
 	//Main for testing purposes only, uncomment to test class
-	/*
+	
 	public static void main(String[] args) {
 		Minigame minigame = new Minigame();
-		int output = minigame.sliderMinigame(minigame, 0, 3);
+		System.out.println("Starting Xai!...");
+		pause(500L);
+		int xai = minigame.xaiMinigame();
+		System.out.println("Xai:   " + xai + "\n");
+		System.out.println("Staring attack meter!...");
+		pause(500L);
+		int output = minigame.sliderMinigame(minigame, 0, xai);
 		minigame = null;
 		System.out.println("===============================================");
 		System.out.println(output);
-	}*/
+	}
 
 }
