@@ -2,13 +2,13 @@ package digiProject;
 import java.util.*;
 
 public class mainDigivice {
-	public static digimon battlerDigimon = null;
+	/*public static digimon battlerDigimon = null;
     public digimon getBattlerDigimon() {
 		return battlerDigimon;
 	}
 	public void setBattlerDigimon(digimon battlerDigimon) {
 		this.battlerDigimon = battlerDigimon;
-	}
+	}*/
 	public static void main(String[] args) {
         Scanner inputCheck = new Scanner(System.in);
 
@@ -39,7 +39,7 @@ public class mainDigivice {
         // Initialize Digimon with current time (or other initialization logic)
         digimon firstGuy = new digimon(minutes, null, "boyo", null, minutes, minutes, false, false, false, minutes, minutes, minutes, minutes);
         digimon selectedDigimon = null;  // Declare outside of the if block
-        battlerDigimon = firstGuy;
+        //battlerDigimon = firstGuy;
         // Interaction with the Digimon
         String goforth = "Yes";
         System.out.println("Initializing...");

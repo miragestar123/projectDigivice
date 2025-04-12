@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
-		digimon testDigimon = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 1, 1);
+		digimon testDigimon = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 100, 1);
 		battle battle = new battle();
 		BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
@@ -36,7 +36,7 @@ public class battle extends mainDigivice {
 	        
 	        // Initialize the opponent Digimon with random values or a different Digimon
 	        // This can be modified as needed
-	        this.theOpp = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 1, 1);
+	        this.theOpp = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 100, 1);
 	    }
 	}
 
@@ -75,17 +75,23 @@ public class battle extends mainDigivice {
             }
 
             // Check if battle is over
-            if (myHitPoints <= 0) {
+            if (myHitPoints <= 0 && turnCount <4) {
                 System.out.println("Your digimon has fainted. You lost!");
                 break;
-            } else if (oppHitPoints <= 0) {
+            } else if (oppHitPoints <= 0 && turnCount <4) {
                 System.out.println("The opponent's digimon has fainted. You won!");
                 break;
+            } else if (turnCount == 4) {
+            	if (myHitPoints >= oppHitPoints) {
+                    System.out.println("You won!");
+                    break;
+            	} else {
+                    System.out.println("You lose!");
+                    break;
+            	}
             }
         }
     }
-
-    // You can add additional methods as needed
 }
 		
 
