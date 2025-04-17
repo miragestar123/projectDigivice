@@ -23,16 +23,24 @@ public class Digivolve extends mainDigivice {
 		        
 			    //outputs list for view
 			    System.out.println(digivolveList);
-			    System.out.println("Input the index.");
+			    System.out.println("Input the desired digimon index.");
 			    int indexFinder = inputCheck.nextInt();
 		        // Check if the index is valid
 			    /*while (indexFinder != digivolveList.parts[0]) { digivolvelist.parts needs to call for the nextEvoIndex belonging to each individual list item in digivolveList
 			    	
 			    }*/
 		        if (indexFinder >= 0) {
-		            myDigivolve = digivolveList.get(indexFinder);
+		        	for (digivolver d : digivolveList) {
+		        	    if (d.getNextEvoIndex() == indexFinder) {
+		        	        myDigivolve = d;
+		        	        break;
+		        	    }
+		        	} if (myDigivolve == null) {
+		                System.out.println("No Digivolution found for that index.");
+		                return eggie;
+		            } 
 		            if (myGuy.atkPwr >= myDigivolve.needsAtk && myGuy.HP >= myDigivolve.needsHP && myGuy.spirit >= myDigivolve.needsSpirit) {
-		            	digivolvedGuy = digiList.get(myDigivolve.nextEvoIndex);
+		            	digivolvedGuy = digiList.get(myDigivolve.nextEvoIndex); 
 		            	System.out.println("Your digimon digivolved to " + digivolvedGuy.species + "!!!");
 		            	return digivolvedGuy;
 		            	
@@ -57,6 +65,7 @@ public class Digivolve extends mainDigivice {
 				 int needsHP;
 				 int needsSpirit;
 				 String backupSpecies;
+				 int digiVersion; //egg determines this, add to digivolver variables to lock certain evolutions to certain egg paths, eg flame egg digiVersion is 1, so it gives agumon all evolutions whose digiVersion is 1 
 				 
 				 public digivolver(int nextEvoIndex, int careMistakeTracker, int needAreaClear, int needsAtk, int needsHP, int needsSpirit) {
 						super();
