@@ -3,6 +3,8 @@ package digiProject;
 import java.io.*;
 import java.util.*;
 
+import digiProject.Digivolve.digivolver;
+
 public class digimonReader {
     public static void main(String[] args) {
         FilePathGen findFilePath = new FilePathGen();
@@ -53,9 +55,42 @@ public class digimonReader {
         }
         return digiList;
     }
+    
+    public static List<Digivolve.digivolver> readDigivolveFile(String filePath) {
+    	Digivolve newDigivolve = new Digivolve();
+        List<Digivolve.digivolver> digivolveList = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Split the line by commas
+                String[] parts = line.split(",");
+                
+                // Extract values for the digivolve object  
+                int nextEvoIndex = Integer.parseInt(parts[0]);
+                int careMistakeTracker = Integer.parseInt(parts[1]);
+                int needAreaClear = Integer.parseInt(parts[2]);
+                int needsAtk = Integer.parseInt(parts[3]);
+                int needsHP = Integer.parseInt(parts[4]);
+                int needsSpirit = Integer.parseInt(parts[5]);
+                
+                // Create a digivolve object with the extracted data
+                Digivolve.digivolver d = newDigivolve.new digivolver(nextEvoIndex,careMistakeTracker,needAreaClear,needsAtk,needsHP,needsSpirit);
+                
+                // Add the digivolve to the list
+                digivolveList.add(d);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return digivolveList;
+    }
 
     // Method to return the list of digimons
     public static List<digimon> getDigiList(String filePath) {
         return readDigimonFile(filePath);
+    }
+    
+    public static List<Digivolve.digivolver> getDigivolveList(String filePath) {
+        return readDigivolveFile(filePath);
     }
 }

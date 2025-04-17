@@ -66,6 +66,10 @@ public class mainDigivice {
         } else {
             System.out.println("Why bother asking then?");
         }
+        Digivolve tryDigivolve = new Digivolve();
+        System.out.println("Time to digivolve! (weee woooo weee woooo)");
+        selectedDigimon = tryDigivolve.startDigivolve(selectedDigimon);
+        System.out.println(selectedDigimon);
     }
 }
 
