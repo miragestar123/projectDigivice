@@ -3,15 +3,15 @@ import java.util.Random;
 
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
-		digimon testDigimon = new digimon(1, "Opponents Species", "Type", null, 100, 50, false, false, true, 5, 50, 100, 1);
+		digimon testDigimon = new digimon(7,"Tyranomon","Champion","Dragon",100,0,false,false,false,0,250,250,2);
+		digimon testDigimon2 = new digimon(8,"Greymon","Champion","Dragon",100,0,false,false,false,0,260,240,2);
 		battle battle = new battle();
 		BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
 		//myBattler = initializeDigimon;
-		battle.startBattle(newBattle.myBattler, newBattle.theOpp);
+		battle.startBattle(testDigimon, testDigimon2);
 	}
 	
-	//Battle instance class (Author: Xandino)
 	private class BattleInstance{
 		public digimon myBattler = null;
 		public digimon theOpp = null;
