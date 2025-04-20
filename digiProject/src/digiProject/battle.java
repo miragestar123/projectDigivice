@@ -3,13 +3,13 @@ import java.util.Random;
 
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
-		digimon testDigimon = new digimon(9,"Seadramon","Champion","Aquan",100,0,false,false,false,0,280,220,2);
+		digimon testDigimon = new digimon(10,"Damemon","Champion","Machine",100,0,false,false,false,0,250,200,2);
 		digimon testDigimon2 = new digimon(6,"DarkTyrannomon","Champion","Dragon",100,0,false,false,false,0,300,200,2);
 		battle battle = new battle();
 		//BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
 		//myBattler = initializeDigimon;
-		battle.startBattle(testDigimon, testDigimon2);
+		battle.startBattle(testDigimon, testDigimon2); 
 	}
 	
 	/*private class BattleInstance{
@@ -59,7 +59,7 @@ public class battle extends mainDigivice {
 
             // Check if attack is successful (e.g., hit chance)
             if (randomNumber <= myHitrate && myHitPoints > 0) {  // Assuming 75% hit chance for example
-                oppHitPoints -= (myBattler.getAtkPwr() / 2);
+                oppHitPoints -= ((myBattler.getAtkPwr() / 3) * attributeAdvantage(myBattler,theOpp));
                 System.out.println("The attack was successful! Opponent's HP: " + oppHitPoints);
             } else {
                 System.out.println("The attack missed!");
@@ -68,7 +68,7 @@ public class battle extends mainDigivice {
             // Opponent attacks (similarly can be improved)
             randomNumber = random.nextInt(100) + 1;
             if (randomNumber <= oppHitrate && oppHitPoints > 0) {
-                myHitPoints -= (theOpp.getAtkPwr() / 2);
+                myHitPoints -= ((theOpp.getAtkPwr() / 3) * attributeAdvantage(theOpp,myBattler));
                 System.out.println("The opponent attacks! Your HP: " + myHitPoints);
             } else {
                 System.out.println("The opponent's attack missed!");
@@ -82,7 +82,7 @@ public class battle extends mainDigivice {
                 System.out.println("The opponent's digimon has fainted. You won!");
                 break;
             } else if (turnCount == 4) {
-            	if ((myHitPoints/myBattler.HP) >= (oppHitPoints/theOpp.HP)) {
+            	if ((myHitPoints/myBattler.HP) >= (oppHitPoints/theOpp.HP) && myHitPoints > 0) {
                     System.out.println("You won!");
                     break;
             	} else {
@@ -91,6 +91,43 @@ public class battle extends mainDigivice {
             	}
             }
         }
+    }
+    
+    public double attributeAdvantage(digimon myGuy, digimon theOpp) {
+    	if (myGuy.attribute == "Aquan" && theOpp.attribute == "Dragon" 
+    			|| myGuy.attribute == "Aquan" && theOpp.attribute == "Machine" 
+    			|| myGuy.attribute == "Dragon" && theOpp.attribute == "Beast" 
+    			|| myGuy.attribute == "Dragon" && theOpp.attribute == "Insect" 
+    			|| myGuy.attribute == "Insect" && theOpp.attribute == "Aquan" 
+    			|| myGuy.attribute == "Insect" && theOpp.attribute == "Machine" 
+    			|| myGuy.attribute == "Bird" && theOpp.attribute == "Beast" 
+    			|| myGuy.attribute == "Bird" && theOpp.attribute == "Insect" 
+    			|| myGuy.attribute == "Beast" && theOpp.attribute == "Machine" 
+    			|| myGuy.attribute == "Beast" && theOpp.attribute == "Insect" 
+    			|| myGuy.attribute == "Machine" && theOpp.attribute == "Bird" 
+    			|| myGuy.attribute == "Machine" && theOpp.attribute == "Dragon"
+    			|| myGuy.attribute == "Holy" && theOpp.attribute == "Dark"
+    			|| myGuy.attribute == "Dark" && theOpp.attribute == "Holy") {
+    		return 1.25;
+    	} else if (myGuy.attribute == "Aquan" && theOpp.attribute == "Insect" 
+    			|| myGuy.attribute == "Dragon" && theOpp.attribute == "Machine" 
+    			|| myGuy.attribute == "Dragon" && theOpp.attribute == "Aquan" 
+    			|| myGuy.attribute == "Insect" && theOpp.attribute == "Bird" 
+    			|| myGuy.attribute == "Insect" && theOpp.attribute == "Beast" 
+    			|| myGuy.attribute == "Insect" && theOpp.attribute == "Bird" 
+    			|| myGuy.attribute == "Insect" && theOpp.attribute == "Dragon" 
+    			|| myGuy.attribute == "Bird" && theOpp.attribute == "Machine" 
+    			|| myGuy.attribute == "Beast" && theOpp.attribute == "Bird" 
+    			|| myGuy.attribute == "Beast" && theOpp.attribute == "Dragon" 
+    			|| myGuy.attribute == "Machine" && theOpp.attribute == "Aquan" 
+    			|| myGuy.attribute == "Machine" && theOpp.attribute == "Beast" 
+    			|| myGuy.attribute == "Machine" && theOpp.attribute == "Insect") {
+    		return 0.75;
+    	} else {
+    		return 1;
+    	}
+    		
+    	
     }
 }
 		
