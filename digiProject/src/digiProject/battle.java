@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
-		digimon testDigimon = new digimon(19,"Titamon","Mega","Dark",100,0,false,false,false,0,550,450,4);
-		digimon testDigimon2 = new digimon(22,"MetalSeadramon","Mega","Aquan",100,0,false,false,false,0,550,450,4);
+		digimon testDigimon = new digimon(3,"Agumon","Rookie","Dragon",100,0,false,false,false,0,150,220,1);
+		digimon testDigimon2 = new digimon(5,"Betamon","Rookie","Aquan",100,0,false,false,false,0,150,150,1);
 		battle battle = new battle();
 		//BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
@@ -46,7 +46,7 @@ public class battle extends mainDigivice {
         int turnCount = 0;
         double myHitrate = ((myBattler.atkPwr * 100)/(myBattler.atkPwr + theOpp.atkPwr)); //+ attributeAdvantage
         double oppHitrate = ((theOpp.atkPwr * 100)/(theOpp.atkPwr + myBattler.atkPwr));
-        System.out.println("Ready???" + "/n" + "Fight!!!");
+        System.out.println("Ready??? \nFight!!!");
 
         while (myHitPoints > 0 && oppHitPoints > 0) {
             turnCount++;
