@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
-		digimon testDigimon = new digimon(10,"Damemon","Champion","Machine",100,0,false,false,false,0,250,200,2);
-		digimon testDigimon2 = new digimon(6,"DarkTyrannomon","Champion","Dragon",100,0,false,false,false,0,300,200,2);
+		digimon testDigimon = new digimon(19,"Titamon","Mega","Dark",100,0,false,false,false,0,550,450,4);
+		digimon testDigimon2 = new digimon(22,"MetalSeadramon","Mega","Aquan",100,0,false,false,false,0,550,450,4);
 		battle battle = new battle();
 		//BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
@@ -58,18 +58,21 @@ public class battle extends mainDigivice {
             int randomNumber = random.nextInt(100) + 1;
 
             // Check if attack is successful (e.g., hit chance)
-            if (randomNumber <= myHitrate && myHitPoints > 0) {  // Assuming 75% hit chance for example
-                oppHitPoints -= ((myBattler.getAtkPwr() / 3) * attributeAdvantage(myBattler,theOpp));
-                System.out.println("The attack was successful! Opponent's HP: " + oppHitPoints);
+            if (randomNumber <= myHitrate && myHitPoints > 0) {  
+            	System.out.println("The attack was successful!");
+                oppHitPoints -= ((myBattler.getAtkPwr() / 3) * attributeAdvantage(myBattler,theOpp) *critical());
+                System.out.println("Opponent's HP: " + oppHitPoints);
             } else {
                 System.out.println("The attack missed!");
             }
-
+            
+            System.out.println("The opponent swings!!!");
             // Opponent attacks (similarly can be improved)
             randomNumber = random.nextInt(100) + 1;
             if (randomNumber <= oppHitrate && oppHitPoints > 0) {
-                myHitPoints -= ((theOpp.getAtkPwr() / 3) * attributeAdvantage(theOpp,myBattler));
-                System.out.println("The opponent attacks! Your HP: " + myHitPoints);
+            	System.out.println("The opponent connects!");
+                myHitPoints -= ((theOpp.getAtkPwr() / 3) * attributeAdvantage(theOpp,myBattler) *critical());
+                System.out.println("Your HP: " + myHitPoints);
             } else {
                 System.out.println("The opponent's attack missed!");
             }
@@ -82,7 +85,7 @@ public class battle extends mainDigivice {
                 System.out.println("The opponent's digimon has fainted. You won!");
                 break;
             } else if (turnCount == 4) {
-            	if ((myHitPoints/myBattler.HP) >= (oppHitPoints/theOpp.HP) && myHitPoints > 0) {
+            	if ((myHitPoints) >= (oppHitPoints) && myHitPoints > 0) {
                     System.out.println("You won!");
                     break;
             	} else {
@@ -125,9 +128,24 @@ public class battle extends mainDigivice {
     		return 0.75;
     	} else {
     		return 1;
+    		
     	}
     		
     	
+    }
+    
+    public double critical() {
+    	Random random = new Random();
+        int randomNumber = random.nextInt(20) + 1;
+        if (randomNumber == 20) {
+        	System.out.println("A critical hit!!!");
+        	return 2;
+        } else if (randomNumber == 1) {
+        	System.out.println("Yikes, a critical miss!");
+        	return .5;
+        }else {
+        	return 1;
+        }
     }
 }
 		
