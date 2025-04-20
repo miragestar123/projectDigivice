@@ -4,7 +4,7 @@ import java.util.Random;
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
 		digimon testDigimon = new digimon(9,"Seadramon","Champion","Aquan",100,0,false,false,false,0,280,220,2);
-		digimon testDigimon2 = new digimon(8,"Greymon","Champion","Dragon",100,0,false,false,false,0,260,240,2);
+		digimon testDigimon2 = new digimon(6,"DarkTyrannomon","Champion","Dragon",100,0,false,false,false,0,300,200,2);
 		battle battle = new battle();
 		//BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
