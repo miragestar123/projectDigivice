@@ -1,10 +1,43 @@
 package digiProject;
+import java.util.List;
 import java.util.Random;
+
+import digiProject.Digivolve.digivolver;
 
 public class battle extends mainDigivice {
 	public static void main(String[] args) {
-		digimon testDigimon = new digimon(3,"Agumon","Rookie","Dragon",100,0,false,false,false,0,150,220,1);
-		digimon testDigimon2 = new digimon(5,"Betamon","Rookie","Aquan",100,0,false,false,false,0,150,150,1);
+		digimon testDigimon = null;
+		digimon testDigimon2 = null;
+		digimon testDigimon3 = new digimon(3,"Agumon","Rookie","Dragon",100,0,false,false,false,0,150,220,1);
+		digimon testDigimon4 = new digimon(5,"Betamon","Rookie","Aquan",100,0,false,false,false,0,150,150,1);
+		Random randomTest = new Random();
+        FilePathGen findFilePath = new FilePathGen();
+        String filePath = findFilePath.getFilePath("digimonList.txt").toString();
+        List<digimon> digiList = digimonReader.getDigiList(filePath);  
+        //randomize digimon1
+        int randomNum = randomTest.nextInt(23) + 1;
+        randomNum = randomTest.nextInt(23) + 1;
+        System.out.println(randomNum);
+        if (randomNum > 0) {
+        	for (digimon d : digiList) {
+        	    if (d.getIndex() == randomNum) {
+        	    	testDigimon = digiList.get(d.index);
+        	        break;
+        }
+        	}
+        }
+        //randomize digimon2
+        randomNum = randomTest.nextInt(23) + 1;
+        System.out.println(randomNum);
+        if (randomNum > 0) {
+        	for (digimon d : digiList) {
+        	    if (d.getIndex() == randomNum) {
+        	    	testDigimon2 = digiList.get(d.index);
+        	        break;
+        }
+        	}
+        }
+        
 		battle battle = new battle();
 		//BattleInstance newBattle = battle.new BattleInstance(testDigimon);
 
@@ -46,6 +79,7 @@ public class battle extends mainDigivice {
         int turnCount = 0;
         double myHitrate = ((myBattler.atkPwr * 100)/(myBattler.atkPwr + theOpp.atkPwr)); //+ attributeAdvantage
         double oppHitrate = ((theOpp.atkPwr * 100)/(theOpp.atkPwr + myBattler.atkPwr));
+        System.out.println("Battle Loading... " + myBattler.species + " V.S. " +  theOpp.species + "!!!");
         System.out.println("Ready??? \nFight!!!");
 
         while (myHitPoints > 0 && oppHitPoints > 0) {
